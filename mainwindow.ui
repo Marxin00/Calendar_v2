@@ -13,10 +13,190 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_9">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_3"/>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QDateEdit" name="dateEdit">
+        <property name="dateTime">
+         <datetime>
+          <hour>0</hour>
+          <minute>0</minute>
+          <second>0</second>
+          <year>2022</year>
+          <month>1</month>
+          <day>1</day>
+         </datetime>
+        </property>
+        <property name="maximumDate">
+         <date>
+          <year>2022</year>
+          <month>12</month>
+          <day>31</day>
+         </date>
+        </property>
+        <property name="minimumDate">
+         <date>
+          <year>2022</year>
+          <month>1</month>
+          <day>1</day>
+         </date>
+        </property>
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Sprawdź</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>Faza księżyca</string>
+         </attribute>
+         <widget class="QWidget" name="verticalLayoutWidget_4">
+          <property name="geometry">
+           <rect>
+            <x>9</x>
+            <y>9</y>
+            <width>331</width>
+            <height>371</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="verticalLayoutWidget_5">
+          <property name="geometry">
+           <rect>
+            <x>359</x>
+            <y>9</y>
+            <width>411</width>
+            <height>371</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5"/>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>Imieniny</string>
+         </attribute>
+         <widget class="QWidget" name="verticalLayoutWidget_6">
+          <property name="geometry">
+           <rect>
+            <x>9</x>
+            <y>9</y>
+            <width>771</width>
+            <height>371</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_3">
+         <attribute name="title">
+          <string>Ciekawostka</string>
+         </attribute>
+         <widget class="QWidget" name="verticalLayoutWidget_7">
+          <property name="geometry">
+           <rect>
+            <x>9</x>
+            <y>9</y>
+            <width>771</width>
+            <height>371</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_4">
+         <attribute name="title">
+          <string>notatka</string>
+         </attribute>
+         <widget class="QWidget" name="verticalLayoutWidget_8">
+          <property name="geometry">
+           <rect>
+            <x>9</x>
+            <y>9</y>
+            <width>771</width>
+            <height>371</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <widget class="QPlainTextEdit" name="plainTextEdit"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>dateEdit</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>plainTextEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
