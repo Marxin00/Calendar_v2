@@ -1,2 +1,12 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/Phase_pick">
+        <file>phases/phase_first_quarter.jpg</file>
+        <file>phases/phase_full.jpg</file>
+        <file>phases/phase_new.jpg</file>
+        <file>phases/phase_third_quarter.jpg</file>
+        <file>phases/phase_waning_crescent.jpg</file>
+        <file>phases/phase_waning_gibbous.jpg</file>
+        <file>phases/phase_waxing_crescent.jpg</file>
+        <file>phases/phase_waxing_gibbous.jpg</file>
+    </qresource>
+</RCC>
