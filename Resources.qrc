@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Phase_pick">
+    <qresource prefix="/resources">
         <file>phases/phase_first_quarter.jpg</file>
         <file>phases/phase_full.jpg</file>
         <file>phases/phase_new.jpg</file>
@@ -9,4 +9,8 @@
         <file>phases/phase_waxing_crescent.jpg</file>
         <file>phases/phase_waxing_gibbous.jpg</file>
     </qresource>
+    <qresource prefix="/databse">
+        <file>database.db</file>
+    </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

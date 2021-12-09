@@ -9,6 +9,9 @@
 #include <QDate>
 #include <math.h>
 #include <QtSql>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,14 +24,18 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QSqlDatabase db;
 
 private slots:
     void on_pushButton_clicked();
 
     void on_dateEdit_userDateChanged(const QDate &date);
 
+    void on_save_button_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QDate date;
     int day_of_year;
     float day_of_jl_year;
     float var_jl;

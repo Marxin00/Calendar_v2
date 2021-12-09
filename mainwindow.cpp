@@ -6,6 +6,16 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    db=QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("database.db");
+
+    if(!db.open())
+        ui->label_imieniny->setText("błąd");
+    else
+        ui->label_imieniny->setText("otwarto");
+
+
 }
 
 MainWindow::~MainWindow()
@@ -41,6 +51,13 @@ void MainWindow::on_pushButton_clicked()
         ui->label->setText("Ostatnia kwarta");
         ui->label_img->setPixmap(ostatnia_kwarta_img);
     }
+
+    plik.clear();
+    ui->plainTextEdit->clear();
+    QString file=QString::number(day_of_year);
+
+
+
 }
 
 
@@ -54,4 +71,10 @@ void MainWindow::on_dateEdit_userDateChanged(const QDate &date)
 
 }
 
+
+
+void MainWindow::on_save_button_clicked()
+{
+
+}
 
