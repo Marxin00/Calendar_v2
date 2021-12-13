@@ -11,11 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
     db.setDatabaseName("database.db");
 
     if(!db.open())
-        ui->label_imieniny->setText("błąd");
+        qDebug()<<"błąd otwarcia db";
     else
-        ui->label_imieniny->setText("otwarto");
-
-
+        qDebug()<<"otwarto db";
 }
 
 MainWindow::~MainWindow()
@@ -25,10 +23,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QPixmap now_img (":/Phase_pick/phases/phase_new.jpg");
-    QPixmap pelnia_img (":/Phase_pick/phases/phase_full.jpg");
-    QPixmap pierwsza_kwarta_img (":/Phase_pick/phases/phase_first_quarter.jpg");
-    QPixmap ostatnia_kwarta_img (":/Phase_pick/phases/phase_third_quarter.jpg");
+    QPixmap now_img (":/new/prefix1/phases/moon (2).jpg");
+    QPixmap pelnia_img (":/new/prefix1/phases/moon (4).jpg");
+    QPixmap pierwsza_kwarta_img (":/new/prefix1/phases/moon (1).jpg");
+    QPixmap ostatnia_kwarta_img (":/new/prefix1/phases/moon (3).jpg");
 
     if(0<=var_jl and var_jl<0.25)
     {
@@ -54,7 +52,7 @@ void MainWindow::on_pushButton_clicked()
 
     plik.clear();
     ui->plainTextEdit->clear();
-    QString file=QString::number(day_of_year);
+    //QString file=QString::number(day_of_year);
 
 
 

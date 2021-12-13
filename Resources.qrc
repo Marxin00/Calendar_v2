@@ -1,16 +1,9 @@
 <RCC>
-    <qresource prefix="/resources">
-        <file>phases/phase_first_quarter.jpg</file>
-        <file>phases/phase_full.jpg</file>
-        <file>phases/phase_new.jpg</file>
-        <file>phases/phase_third_quarter.jpg</file>
-        <file>phases/phase_waning_crescent.jpg</file>
-        <file>phases/phase_waning_gibbous.jpg</file>
-        <file>phases/phase_waxing_crescent.jpg</file>
-        <file>phases/phase_waxing_gibbous.jpg</file>
+    <qresource prefix="/resources"/>
+    <qresource prefix="/new/prefix1">
+        <file>phases/moon (1).jpg</file>
+        <file>phases/moon (2).jpg</file>
+        <file>phases/moon (3).jpg</file>
+        <file>phases/moon (4).jpg</file>
     </qresource>
-    <qresource prefix="/databse">
-        <file>database.db</file>
-    </qresource>
-    <qresource prefix="/new/prefix1"/>
 </RCC>
