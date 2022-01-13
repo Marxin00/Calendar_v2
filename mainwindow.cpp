@@ -6,14 +6,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    db=QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("database.db");
-
-    if(!db.open())
-        qDebug()<<"błąd otwarcia db";
-    else
-        qDebug()<<"otwarto db";
+    setWindowTitle("Interaktywny Kalendarz");
+    qDebug()<<QSqlDatabase::drivers();
+    BazaDanychInicjalizacja();
+    BazaDanychStart();
+    BazaDanychWypelni();
 }
 
 MainWindow::~MainWindow()
@@ -73,6 +70,53 @@ void MainWindow::on_dateEdit_userDateChanged(const QDate &date)
 
 void MainWindow::on_save_button_clicked()
 {
+    QSqlQuery query;
+    query.prepare("SELECT txt FROM notes WHERE day=?");
+    query.addBindValue(day_of_year);
+    if(!query.exec())
+        qWarning() << "MainWindow::OnSearchClicked - ERROR: " << query.lastError().text();
+    if(query.first())
+        ui->label_imieniny->setText(query.value(0).toString());
+    else
+        ui->label_imieniny->setText("brak danych");
+}
+
+void MainWindow::BazaDanychStart()
+{
+    const QString DRIVER("QSQLITE");
+
+    if(QSqlDatabase::isDriverAvailable("QSQLITE"))
+    {
+        QSqlDatabase baza=QSqlDatabase::addDatabase("QSQLITE");
+        baza.setDatabaseName(":memory:");
+
+        if(!baza.open())
+              qWarning() << "MainWindow::BazaDanychStart - Blad: " << baza.lastError();
+    }
+    else
+    {
+        qWarning() << "MainWindow::DatabaseStart - Blad: brsk syerownika " << DRIVER << " dostępny";
+    }
 
 }
 
+void MainWindow::BazaDanychInicjalizacja()
+{
+    QSqlQuery query("CREATE TABLE notes (day INTEGER PRIMARY KEY, txt TEXT)");
+    if(!query.isActive())
+        qWarning()<< "MainWindow::BazaDanychInicjalizacja-Blad: "<<query.lastError().text();
+}
+
+void MainWindow::BazaDanychWypelni()
+{
+    QSqlQuery query;
+
+        if(!query.exec("INSERT INTO notes(txt) VALUES('jeden')"))
+            qWarning() << "MainWindow::BazaDanychWypelni - Blad: " << query.lastError().text();
+        if(!query.exec("INSERT INTO notes(txt) VALUES('dwa')"))
+            qWarning() << "MainWindow::BazaDanychWypelni - Blad: " << query.lastError().text();
+        if(!query.exec("INSERT INTO notes(txt) VALUES('trzy')"))
+            qWarning() << "MainWindow::BazaDanychWypelni - Blad: " << query.lastError().text();
+        if(!query.exec("INSERT INTO notes(txt) VALUES('cztery')"))
+            qWarning() << "MainWindow::BazaDanychWypelni - Blad: " << query.lastError().text();
+}

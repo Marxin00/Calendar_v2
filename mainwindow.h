@@ -8,9 +8,12 @@
 #include <QMessageBox>
 #include <QDate>
 #include <math.h>
+
 #include <QtSql>
+#include <QSqlDriver>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
 
 
 QT_BEGIN_NAMESPACE
@@ -24,7 +27,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QSqlDatabase db;
+private:
+    void BazaDanychStart();
+    void BazaDanychInicjalizacja();
+    void BazaDanychWypelni();
+
 
 private slots:
     void on_pushButton_clicked();
@@ -33,6 +40,7 @@ private slots:
 
     void on_save_button_clicked();
 
+
 private:
     Ui::MainWindow *ui;
     QDate date;
@@ -40,6 +48,7 @@ private:
     float day_of_jl_year;
     float var_jl;
     QString plik="";
+
 
 };
 #endif // MAINWINDOW_H
