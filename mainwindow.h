@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QDate>
 #include <math.h>
+#include <QtDebug>
 
 #include <QtSql>
 #include <QSqlDriver>
@@ -29,9 +30,7 @@ public:
     ~MainWindow();
 private:
     void BazaDanychStart();
-    void BazaDanychInicjalizacja();
-    void BazaDanychWypelni();
-
+    void BazaDanychWypelni(QString dane);
 
 private slots:
     void on_pushButton_clicked();

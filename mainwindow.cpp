@@ -8,9 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setWindowTitle("Interaktywny Kalendarz");
     qDebug()<<QSqlDatabase::drivers();
-    BazaDanychInicjalizacja();
     BazaDanychStart();
-    BazaDanychWypelni();
 }
 
 MainWindow::~MainWindow()
@@ -49,8 +47,16 @@ void MainWindow::on_pushButton_clicked()
 
     plik.clear();
     ui->plainTextEdit->clear();
-    //QString file=QString::number(day_of_year);
 
+    QSqlQuery query;
+    query.prepare("SELECT txt FROM notes WHERE day=?");
+    query.addBindValue(day_of_year);
+    if(!query.exec())
+        qWarning() << "MainWindow::OnSearchClicked - ERROR: " << query.lastError().text();
+    if(query.first())
+        ui->plainTextEdit->setPlainText(query.value(0).toString());
+    else
+        ui->plainTextEdit->setPlaceholderText("brak notatki");
 
 
 }
@@ -70,15 +76,8 @@ void MainWindow::on_dateEdit_userDateChanged(const QDate &date)
 
 void MainWindow::on_save_button_clicked()
 {
-    QSqlQuery query;
-    query.prepare("SELECT txt FROM notes WHERE day=?");
-    query.addBindValue(day_of_year);
-    if(!query.exec())
-        qWarning() << "MainWindow::OnSearchClicked - ERROR: " << query.lastError().text();
-    if(query.first())
-        ui->label_imieniny->setText(query.value(0).toString());
-    else
-        ui->label_imieniny->setText("brak danych");
+    QString tekst=ui->plainTextEdit->toPlainText();
+    BazaDanychWypelni(tekst);
 }
 
 void MainWindow::BazaDanychStart()
@@ -88,7 +87,7 @@ void MainWindow::BazaDanychStart()
     if(QSqlDatabase::isDriverAvailable("QSQLITE"))
     {
         QSqlDatabase baza=QSqlDatabase::addDatabase("QSQLITE");
-        baza.setDatabaseName(":memory:");
+        baza.setDatabaseName("database.db");
 
         if(!baza.open())
               qWarning() << "MainWindow::BazaDanychStart - Blad: " << baza.lastError();
@@ -100,23 +99,13 @@ void MainWindow::BazaDanychStart()
 
 }
 
-void MainWindow::BazaDanychInicjalizacja()
-{
-    QSqlQuery query("CREATE TABLE notes (day INTEGER PRIMARY KEY, txt TEXT)");
-    if(!query.isActive())
-        qWarning()<< "MainWindow::BazaDanychInicjalizacja-Blad: "<<query.lastError().text();
-}
 
-void MainWindow::BazaDanychWypelni()
+void MainWindow::BazaDanychWypelni(QString dane)
 {
     QSqlQuery query;
-
-        if(!query.exec("INSERT INTO notes(txt) VALUES('jeden')"))
-            qWarning() << "MainWindow::BazaDanychWypelni - Blad: " << query.lastError().text();
-        if(!query.exec("INSERT INTO notes(txt) VALUES('dwa')"))
-            qWarning() << "MainWindow::BazaDanychWypelni - Blad: " << query.lastError().text();
-        if(!query.exec("INSERT INTO notes(txt) VALUES('trzy')"))
-            qWarning() << "MainWindow::BazaDanychWypelni - Blad: " << query.lastError().text();
-        if(!query.exec("INSERT INTO notes(txt) VALUES('cztery')"))
+    query.prepare("INSERT OR REPLACE INTO notes(day,txt) VALUES(?,?)");
+    query.addBindValue(day_of_year);
+    query.addBindValue(dane);
+        if (!query.exec())
             qWarning() << "MainWindow::BazaDanychWypelni - Blad: " << query.lastError().text();
 }
