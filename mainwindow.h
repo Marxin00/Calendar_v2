@@ -9,12 +9,14 @@
 #include <QDate>
 #include <math.h>
 #include <QtDebug>
+#include <QPixmap>
 
 #include <QtSql>
 #include <QSqlDriver>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
+
 
 
 QT_BEGIN_NAMESPACE
