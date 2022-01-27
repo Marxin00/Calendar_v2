@@ -21,6 +21,7 @@ void MainWindow::on_checkButton_clicked()
 {
     phase();
     ui->plainTextEdit->clear();
+    siecT(TestURL);
 
     QSqlQuery query;
     query.prepare("SELECT txt FROM notes WHERE day=?");
@@ -41,7 +42,12 @@ void MainWindow::on_dateEdit_userDateChanged(const QDate &date)
     float faza=((day_of_jl_year/29.5305902778)-0.3033);
     float x=floor(faza); //wyciąganie wartości po przecinku
     var_jl=faza-x;
-
+    QString month=date.toString("MMMM").toLower();
+    QString daynum= date.toString("d");
+    TestURL ="https://www.namedaycalendar.com/poland/january/1";
+    TestURL.replace("january",month).replace("1",daynum);
+    qDebug()<<TestURL;
+    qDebug()<<daynum;
 }
 
 
@@ -57,18 +63,42 @@ void MainWindow::on_save_button_clicked()
 void MainWindow::siec(QString URL)
 {
     QNetworkAccessManager *img=new QNetworkAccessManager(this);
-    connect(img,&QNetworkAccessManager::finished, this, &MainWindow::PobieranieZakonczone);
-    const QUrl addres = QUrl(URL);
-    QNetworkRequest zadanie(addres);
+    connect(img,&QNetworkAccessManager::finished, this, &MainWindow::PobieranieObrazuEND);
+    //const QUrl addres = QUrl(URL);
+    QNetworkRequest zadanie(URL);
     img->get(zadanie);
 }
 
-void MainWindow::PobieranieZakonczone(QNetworkReply *replay)
+void MainWindow::PobieranieObrazuEND(QNetworkReply *replay)
 {
     QPixmap img;
     img.loadFromData(replay->readAll());
     ui->label_img->setPixmap(img);
 }
+
+
+void MainWindow::siecT(QString URL)
+{
+    QNetworkAccessManager *img=new QNetworkAccessManager(this);
+    connect(img,&QNetworkAccessManager::finished, this, &MainWindow::PobieranieTekstuEND);
+    //const QUrl addres = QUrl(URL);
+    QNetworkRequest zadanie(URL);
+    img->get(zadanie);
+}
+
+void MainWindow::PobieranieTekstuEND(QNetworkReply *replay)
+{
+    QString txt;
+    txt=(replay->readAll());
+    int startid=txt.indexOf("<div class=\"name\">");
+    int endid=txt.lastIndexOf("<div class=\"name\">");
+    int dif=(endid+20)-startid;
+    QString ime = txt.mid(startid+18,dif);
+    qDebug()<<ime;
+    ime.remove("<div class=\"name\">").remove("</div>").remove("</div").remove("</di").remove("</d").remove("</");
+    ui->label_imieniny->setText(ime);
+}
+
 //----------------------------------------------[obliczanie fazy]------------------------------------------------------
 void MainWindow::phase()
 {

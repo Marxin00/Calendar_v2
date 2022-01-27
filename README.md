@@ -3,7 +3,7 @@ Crated by Marcin Flak as a second part of a procet for "programowanie alpikacyjn
 ## Prerequisites
 * Web scraping:
 ```
--searching and retrieving data on whose name days are on a given day
+-searching and retrieving data on whose name days are on a given day/retrieving image of moon phase
 ```
 * calculating phase of moon rather than reading from file
 * add option to make notes:

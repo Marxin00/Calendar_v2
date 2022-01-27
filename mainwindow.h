@@ -43,8 +43,10 @@ private slots:
     void on_dateEdit_userDateChanged(const QDate &date); //klasa okna z datą
     void on_save_button_clicked();//zapisywanie tekstu do bazy danych
 
-    void PobieranieZakonczone(QNetworkReply*);
+    void PobieranieObrazuEND(QNetworkReply*);
+    void PobieranieTekstuEND(QNetworkReply*);
     void siec(QString URL);
+    void siecT(QString URL);
 
 private:
     Ui::MainWindow *ui;
@@ -55,6 +57,6 @@ private:
     QString ThirdquarterURL ="https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004874/phase_third_quarter.2243_print.jpg";
     QString FullURL ="https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004874/phase_full.3492_print.jpg";
     QString FirstquarterURL ="https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004874/phase_first_quarter.5440_print.jpg";
-
+    QString TestURL;
 };
 #endif // MAINWINDOW_H
