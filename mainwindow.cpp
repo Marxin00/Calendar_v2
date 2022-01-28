@@ -19,9 +19,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_checkButton_clicked()
 {
-    phase();
+    phase();//wywołanie klasy phase
+    WebRequest(TestURL);//wywołanie klasy webReq z parmetrem Test
+
     ui->plainTextEdit->clear();
-    siecT(TestURL);
 
     QSqlQuery query;
     query.prepare("SELECT txt FROM notes WHERE day=?");
@@ -35,24 +36,23 @@ void MainWindow::on_checkButton_clicked()
 }
 
 
-void MainWindow::on_dateEdit_userDateChanged(const QDate &date)
+void MainWindow::on_dateEdit_userDateChanged(const QDate &date)//klasa przy zmianie wartości daty
 {
     day_of_jl_year=date.toJulianDay();
     day_of_year=date.dayOfYear();
     float faza=((day_of_jl_year/29.5305902778)-0.3033);
     float x=floor(faza); //wyciąganie wartości po przecinku
     var_jl=faza-x;
+    //definiowanie i zmienianie TestURL
     QString month=date.toString("MMMM").toLower();
     QString daynum= date.toString("d");
     TestURL ="https://www.namedaycalendar.com/poland/january/1";
     TestURL.replace("january",month).replace("1",daynum);
-    qDebug()<<TestURL;
-    qDebug()<<daynum;
 }
 
 
 
-void MainWindow::on_save_button_clicked()
+void MainWindow::on_save_button_clicked()//zapisywanie tekstu do bazy danych
 {
     QString tekst=ui->plainTextEdit->toPlainText();
     BazaDanychWypelni(tekst);
@@ -60,33 +60,15 @@ void MainWindow::on_save_button_clicked()
 
 //-----------------------------------------------------------[web]---------------------------------------------------------------
 
-void MainWindow::siec(QString URL)
+void MainWindow::WebRequest(QString URL)//wysyłanie żądania do witryny
 {
     QNetworkAccessManager *img=new QNetworkAccessManager(this);
-    connect(img,&QNetworkAccessManager::finished, this, &MainWindow::PobieranieObrazuEND);
-    //const QUrl addres = QUrl(URL);
+    connect(img,&QNetworkAccessManager::finished, this, &MainWindow::RequestProcessing);
     QNetworkRequest zadanie(URL);
     img->get(zadanie);
 }
 
-void MainWindow::PobieranieObrazuEND(QNetworkReply *replay)
-{
-    QPixmap img;
-    img.loadFromData(replay->readAll());
-    ui->label_img->setPixmap(img);
-}
-
-
-void MainWindow::siecT(QString URL)
-{
-    QNetworkAccessManager *img=new QNetworkAccessManager(this);
-    connect(img,&QNetworkAccessManager::finished, this, &MainWindow::PobieranieTekstuEND);
-    //const QUrl addres = QUrl(URL);
-    QNetworkRequest zadanie(URL);
-    img->get(zadanie);
-}
-
-void MainWindow::PobieranieTekstuEND(QNetworkReply *replay)
+void MainWindow::RequestProcessing(QNetworkReply *replay)//przetwarzanie odpowiedzi żądania
 {
     QString txt;
     txt=(replay->readAll());
@@ -94,7 +76,6 @@ void MainWindow::PobieranieTekstuEND(QNetworkReply *replay)
     int endid=txt.lastIndexOf("<div class=\"name\">");
     int dif=(endid+20)-startid;
     QString ime = txt.mid(startid+18,dif);
-    qDebug()<<ime;
     ime.remove("<div class=\"name\">").remove("</div>").remove("</div").remove("</di").remove("</d").remove("</");
     ui->label_imieniny->setText(ime);
 }
@@ -102,25 +83,33 @@ void MainWindow::PobieranieTekstuEND(QNetworkReply *replay)
 //----------------------------------------------[obliczanie fazy]------------------------------------------------------
 void MainWindow::phase()
 {
+    const QPixmap now_img(":/resources/phases/phase_new.jpg");
+    const QPixmap pelnia_img(":/resources/phases/phase_full.jpg");
+    const QPixmap pierwsza_kwarta_img(":/resources/phases/phase_first_quarte.jpg");
+    const QPixmap ostatnia_kwarta_img(":/resources/phases/phase_third_quart.jpg");
+
+    int with=ui->label_img->width();
+    int height=ui->label_img->height();
+
     if(0<=var_jl and var_jl<0.25)
     {
        ui->label->setText("Nów");
-       siec(NewURL);
+       ui->label_img->setPixmap(now_img.scaled(with,height,Qt::KeepAspectRatio));
     }
     if(0.25<=var_jl and var_jl<0.50)
     {
         ui->label->setText("Pierwsza kwarta");
-        siec(FirstquarterURL);
+        ui->label_img->setPixmap(pierwsza_kwarta_img.scaled(with,height,Qt::KeepAspectRatio));
     }
     if(0.50<=var_jl and var_jl<0.75)
     {
         ui->label->setText("Pełnia");
-        siec(FullURL);
+        ui->label_img->setPixmap(pelnia_img.scaled(with,height,Qt::KeepAspectRatio));
     }
     if(0.75<=var_jl)
     {
         ui->label->setText("Ostatnia kwarta");
-        siec(ThirdquarterURL);
+        ui->label_img->setPixmap(ostatnia_kwarta_img.scaled(with,height,Qt::KeepAspectRatio));
     }
 }
 
@@ -141,9 +130,7 @@ void MainWindow::BazaDanychStart()
     {
         qWarning()<<"Blad sterownika: "<<DRIVER<<"dostępny";
     }
-
 }
-
 
 void MainWindow::BazaDanychWypelni(QString dane)
 {

@@ -1,9 +1,8 @@
 <RCC>
-    <qresource prefix="/resources"/>
-    <qresource prefix="/new/prefix1">
-        <file>phases/moon (1).jpg</file>
-        <file>phases/moon (2).jpg</file>
-        <file>phases/moon (3).jpg</file>
-        <file>phases/moon (4).jpg</file>
+    <qresource prefix="/resources">
+        <file>phases/phase_first_quarte.jpg</file>
+        <file>phases/phase_full.jpg</file>
+        <file>phases/phase_new.jpg</file>
+        <file>phases/phase_third_quart.jpg</file>
     </qresource>
 </RCC>
