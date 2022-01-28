@@ -43,7 +43,7 @@ private slots:
     void on_dateEdit_userDateChanged(const QDate &date); //klasa okna z datą
     void on_save_button_clicked();//zapisywanie tekstu do bazy danych
 
-    void RequestProcessing(QNetworkReply*);
+    void ReplayProcessing(QNetworkReply*);
     void WebRequest(QString URL);
 
 private:

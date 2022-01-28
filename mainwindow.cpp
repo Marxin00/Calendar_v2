@@ -62,13 +62,13 @@ void MainWindow::on_save_button_clicked()//zapisywanie tekstu do bazy danych
 
 void MainWindow::WebRequest(QString URL)//wysyłanie żądania do witryny
 {
-    QNetworkAccessManager *img=new QNetworkAccessManager(this);
-    connect(img,&QNetworkAccessManager::finished, this, &MainWindow::RequestProcessing);
+    QNetworkAccessManager *text=new QNetworkAccessManager(this);
+    connect(text,&QNetworkAccessManager::finished, this, &MainWindow::ReplayProcessing);
     QNetworkRequest zadanie(URL);
-    img->get(zadanie);
+    text->get(zadanie);
 }
 
-void MainWindow::RequestProcessing(QNetworkReply *replay)//przetwarzanie odpowiedzi żądania
+void MainWindow::ReplayProcessing(QNetworkReply *replay)//przetwarzanie odpowiedzi żądania
 {
     QString txt;
     txt=(replay->readAll());
